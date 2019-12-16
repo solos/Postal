@@ -144,7 +144,7 @@ extension Configuration {
     ///     - password: The credential of the connection.
     public static func outlook(login: String, password: String) -> Configuration {
         return Configuration(
-            hostname: "imap-mail.outlook.com",
+            hostname: "outlook.office365.com",
             port: 993,
             login: login,
             password: .plain(password),
@@ -173,6 +173,47 @@ extension Configuration {
             spamFolderName: "Junk")
     }
 }
+
+extension Configuration {
+    /// Retrieve pre-configured configuration for QQ.
+    ///
+    /// - parameters:
+    ///     - login: The login of the user.
+    ///     - password: The credential of the connection.
+    public static func qq(login: String, password: String) -> Configuration {
+        return Configuration(
+            hostname: "imap.qq.com",
+            port: 993,
+            login: login,
+            password: .plain(password),
+            connectionType: .tls,
+            checkCertificateEnabled: true,
+            batchSize: 1000,
+            spamFolderName: "Junk")
+    }
+}
+
+extension Configuration {
+    /// Retrieve pre-configured configuration for neteasy.
+    ///
+    /// - parameters:
+    ///     - login: The login of the user.
+    ///     - password: The credential of the connection.
+    public static func neteasy(login: String, password: String) -> Configuration {
+        return Configuration(
+            hostname: "imap.163.com",
+            port: 993,
+            login: login,
+            password: .plain(password),
+            connectionType: .tls,
+            checkCertificateEnabled: true,
+            batchSize: 1000,
+            spamFolderName: "Junk")
+    }
+}
+
+
+
 
 extension Configuration: CustomStringConvertible {
     public var description: String {
