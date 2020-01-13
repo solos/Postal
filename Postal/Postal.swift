@@ -173,6 +173,25 @@ public extension Postal {
             onComplete: onComplete)
     }
     
+    
+    /// Fetch a given number of last emails in a given folder from position
+    ///
+    /// - parameters:
+    ///     - folder: The folder where the search will be performed.
+    ///     - from: from position
+    ///     - last: The number of last mail that should be fetch.
+    ///     - flags: The kind of information you want to retrieve.
+    ///     - extraHeaders: A set of extra headers for the request
+    ///     - onMessage: The completion handler called when a new message is received.
+    ///     - onComplete: The completion handler when the request is finished with or without an error.
+    func fetchLastFrom(_ folder: String, from: UInt, last: UInt, flags: FetchFlag, extraHeaders: Set<String> = [], onMessage: @escaping (FetchResult) -> Void, onComplete: @escaping (PostalError?) -> Void) {
+        assert(!folder.isEmpty, "folder parameter can't be empty")
+        
+        iterateAsync({ try self.session.fetchLastFrom(folder, from: from, last: last, flags: flags, extraHeaders: extraHeaders, handler: $0) },
+                     onItem: onMessage,
+                     onComplete: onComplete)
+    }
+    
     /// Fetch emails by uids in a given folder
     ///
     /// - parameters:

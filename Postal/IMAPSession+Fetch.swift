@@ -162,6 +162,25 @@ extension IMAPSession {
         try fetchMessages(folder, set: .indexes(indexSet), flags: flags, extraHeaders: extraHeaders, handler: handler)
     }
     
+    func fetchLastFrom(_ folder: String, from: UInt, last: UInt, flags: FetchFlag, extraHeaders: Set<String> = [], handler: @escaping (FetchResult) -> Void) throws {
+        let info = try select(folder)
+        
+        var begin:Int = 0
+        
+        let ffrom = info.messagesCount - from - last
+        var length = Int(last)
+        if ffrom > 0 {
+            begin = Int(ffrom)
+        } else {
+            begin = 0
+            length = Int(info.messagesCount - from)
+        }
+        
+        let indexSet = IndexSet(begin..<(begin+length))
+        
+        try fetchMessages(folder, set: .indexes(indexSet), flags: flags, extraHeaders: extraHeaders, handler: handler)
+    }
+    
     func fetchMessages(_ folder: String, set: IMAPIndexes, flags: FetchFlag, extraHeaders: Set<String> = [], handler: @escaping (FetchResult) -> Void) throws {
         let info = try select(folder)
         
